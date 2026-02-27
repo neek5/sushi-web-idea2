@@ -1,0 +1,457 @@
+:root {
+    --bg-dark: #1C3149;
+    --accent-yellow: #f5d76e;
+    --accent-orange: #E85A36;
+    --accent-red: #D9381E;
+    --accent-blue: #2a9cb7;
+    --panel-bg: #FDF3DF;
+    --text-dark: #2c3e50;
+    --text-light: #ecf0f1;
+    --key-idle: #2b3a4a;
+    --key-border: #121f2f;
+    --key-text: #fff;
+    --key-func: #34495e;
+    --key-highlight: #f39c12;
+    --key-cancel: #c0392b;
+    --key-action: #27ae60;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+body {
+    background-color: var(--bg-dark);
+    background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.03) 2px, transparent 2.5px);
+    background-size: 30px 30px;
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 900px;
+    gap: 30px;
+    height: 550px;
+}
+
+/* =========================================
+   LEFT PANEL (The OLED/Paper Display)
+   ========================================= */
+.display-panel {
+    flex: 1;
+    background-color: var(--panel-bg);
+    color: var(--text-dark);
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 0 0 8px #f5d76e, inset 0 0 0 12px #f2c040;
+    overflow: hidden;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.3s ease;
+    padding: 40px;
+}
+
+.screen.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0) scale(1);
+}
+
+h2 {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    color: var(--text-dark);
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    border-bottom: 3px dashed var(--text-dark);
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.menu-options {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.menu-item {
+    font-size: 1.5rem;
+    font-weight: 600;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 0px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 2px solid #ddd;
+}
+
+.key-badge {
+    background-color: var(--accent-orange);
+    color: white;
+    font-family: 'Share Tech Mono', monospace;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.mascot-img-wrap {
+    height: 120px;
+    margin-bottom: -15px;
+    z-index: 2;
+}
+
+.mascot-small {
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Lane Selection */
+.lane-status-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.lane-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    border: 3px solid #ccc;
+    border-radius: 15px;
+    padding: 20px;
+    width: 120px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.lane-num {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.lane-state {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.state-empty {
+    color: #27ae60;
+}
+
+.state-taken {
+    color: #c0392b;
+}
+
+.hint-text {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.highlight {
+    background: var(--key-highlight);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.cancel-hint {
+    margin-top: auto;
+    color: #7f8c8d;
+    font-size: 1rem;
+    position: absolute;
+    bottom: 25px;
+}
+
+/* PIN Entry */
+.pin-display-box {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 2.8rem;
+    letter-spacing: 5px;
+    background: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+    border: 3px solid #bdc3c7;
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    min-width: 280px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hint-row {
+    display: flex;
+    gap: 30px;
+    color: #7f8c8d;
+}
+
+/* Drop Off */
+.sushi-visual-mini {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background: white;
+    padding: 15px 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+.combo-img {
+    height: 50px;
+}
+
+.sushi-result {
+    height: 70px;
+}
+
+.plus-sign,
+.equals-sign {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.highlight-action {
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Processing / Animations */
+.conveyor-container {
+    width: 100%;
+    height: 120px;
+    background-color: #34495e;
+    border: 6px solid #2c3e50;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+.conveyor-belt {
+    width: 200%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255, 255, 255, 0.15) 40px, rgba(255, 255, 255, 0.15) 80px);
+    animation: moveBelt 2s linear infinite;
+}
+
+@keyframes moveBelt {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-80px);
+    }
+}
+
+#dynamic-luggage-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.luggage-item-wrap {
+    /* Reused for quick anim */
+    position: relative;
+}
+
+.luggage-anim-in {
+    animation: beltIn 2s linear forwards;
+}
+
+.luggage-anim-out {
+    animation: beltOut 2s linear forwards;
+}
+
+@keyframes beltIn {
+    0% {
+        transform: translateX(200px);
+    }
+
+    80% {
+        transform: translateX(0px) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(-50px) scale(0.5);
+        opacity: 0;
+    }
+}
+
+@keyframes beltOut {
+    0% {
+        transform: translateX(-150px) scale(0.5);
+        opacity: 0;
+    }
+
+    30% {
+        transform: translateX(0px) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(200px);
+    }
+}
+
+.alert-text {
+    color: var(--accent-red);
+    border-color: transparent;
+}
+
+/* Anim Utilities */
+.pulse-anim {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.mt-2 {
+    margin-top: 20px;
+}
+
+/* =========================================
+   RIGHT PANEL (4x4 Keypad)
+   ========================================= */
+.keypad-container {
+    width: 320px;
+    background: linear-gradient(145deg, #1b2838, #131d2a);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.keypad-title {
+    color: #7f8c8d;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 1px solid #34495e;
+    padding-bottom: 10px;
+}
+
+.keypad-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 15px;
+    flex: 1;
+}
+
+.key-btn {
+    border: none;
+    background: var(--key-idle);
+    color: var(--key-text);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.8rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 0 var(--key-border), 0 10px 10px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.1s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.key-btn:active {
+    transform: translateY(6px);
+    box-shadow: 0 0px 0 var(--key-border), 0 2px 5px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1);
+}
+
+.func-key {
+    background: #e67e22;
+    color: white;
+}
+
+/* Orange for A/B/C */
+.sym-key {
+    background: #16a085;
+}
+
+/* Teal for * */
+.cancel-key {
+    background: #c0392b;
+    color: white;
+    border-color: #900;
+}
+
+/* Red for C/D */
+
+.action-key {
+    color: var(--bg-dark);
+}

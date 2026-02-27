@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sushi Luggage System Interface</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-wrapper">
+        <!-- Display System -->
+        <div class="display-panel paper-panel">
+
+            <!-- SCREEN: Main Menu -->
+            <div id="screen-main-menu" class="screen active">
+                <div class="mascot-img-wrap">
+                    <img src="images/lion-mascot.png" alt="Mascot" class="mascot-small"
+                        onerror="this.style.display='none'">
+                </div>
+                <h2>LUGGAGE SYSTEM</h2>
+                <div class="menu-options">
+                    <div class="menu-item">
+                        <span class="key-badge">A</span>
+                        <span>Deposit Luggage</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="key-badge">B</span>
+                        <span>Retrieve Luggage</span>
+                    </div>
+                </div>
+                <p class="pulse-anim highlight-action" style="margin-top: 30px; font-size: 1.2rem; color: #7f8c8d;">
+                    Please use the keypad on the right to interact
+                </p>
+            </div>
+
+            <!-- SCREEN: Select Lane -->
+            <div id="screen-select-lane" class="screen">
+                <h2>Select Lane</h2>
+                <div class="lane-status-container">
+                    <div class="lane-item" id="lane-1-indicator">
+                        <div class="lane-num">1</div>
+                        <div class="lane-state" id="lane-1-state">O</div>
+                    </div>
+                    <div class="lane-item" id="lane-2-indicator">
+                        <div class="lane-num">2</div>
+                        <div class="lane-state" id="lane-2-state">O</div>
+                    </div>
+                </div>
+                <p class="hint-text">Press <span class="highlight">1</span> or <span class="highlight">2</span> on
+                    keypad</p>
+                <div class="cancel-hint"><strong>D</strong> - Cancel</div>
+            </div>
+
+            <!-- SCREEN: Enter PIN -->
+            <div id="screen-enter-pin" class="screen">
+                <h2>Enter 7-Digit PIN</h2>
+                <div class="pin-display-box" id="pin-display">
+                    _ _ _ _ _ _ _
+                </div>
+                <div class="hint-row">
+                    <span><strong>C</strong> - Clear</span>
+                    <span><strong>D</strong> - Cancel</span>
+                </div>
+            </div>
+
+            <!-- SCREEN: Drop-Off (Deposit Only) -->
+            <div id="screen-drop-off" class="screen">
+                <h2>Drop off luggage</h2>
+                <p>Please place your item on the conveyor belt.</p>
+                <div class="sushi-visual-mini">
+                    <img src="images/luggage-box.png" class="combo-img"
+                        onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgNTAiPjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iNTAiIHJ4PSI1IiBmaWxsPSIjMzMzIi8+PC9zdmc+'">
+                    <span class="plus-sign">+</span>
+                    <img src="images/luggage-small.png" class="combo-img"
+                        onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iODAiIGhlaWdodD0iMTAwIiB4PSIxMCIgcng9IjEwIiBmaWxsPSIjZTg1YTM2Ii8+PC9zdmc+'">
+                    <span class="equals-sign">=</span>
+                    <img src="images/sushi-combo.png" class="combo-img sushi-result"
+                        onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgODAiPjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iNDAiIHk9IjQwIiByeD0iNSIgZmlsbD0iIzMzMyIvPjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI1MCIgeD0iMTAiIHk9IjUiIHJ4PSI4IiBmaWxsPSIjZTg1YTM2Ii8+PC9zdmc+'">
+                </div>
+                <p class="pulse-anim highlight-action">Press <span class="key-badge">#</span> to Submit</p>
+                <div class="cancel-hint mt-2"><strong>D</strong> - Cancel</div>
+            </div>
+
+            <!-- SCREEN: Processing Conveyor -->
+            <div id="screen-processing" class="screen">
+                <h2 id="processing-title">Processing...</h2>
+                <p id="processing-subtitle">Storing luggage in locker...</p>
+
+                <div class="conveyor-container">
+                    <div class="conveyor-belt">
+                        <div class="belt-lines"></div>
+                    </div>
+                    <div id="dynamic-luggage-container"></div>
+                </div>
+            </div>
+
+            <!-- SCREEN: Message -->
+            <div id="screen-message" class="screen">
+                <h1 id="msg-title" class="alert-text">Wrong PIN!</h1>
+                <p id="msg-subtitle">Please try again.</p>
+            </div>
+
+        </div>
+
+        <!-- 4x4 Keypad Panel -->
+        <div class="keypad-container">
+            <h3 class="keypad-title">Secure Keypad</h3>
+            <div class="keypad-grid" id="matrix-keypad">
+                <!-- Row 1 -->
+                <button class="key-btn" data-key="1">1</button>
+                <button class="key-btn" data-key="2">2</button>
+                <button class="key-btn" data-key="3">3</button>
+                <button class="key-btn func-key" data-key="A">A</button>
+
+                <!-- Row 2 -->
+                <button class="key-btn" data-key="4">4</button>
+                <button class="key-btn" data-key="5">5</button>
+                <button class="key-btn" data-key="6">6</button>
+                <button class="key-btn func-key" data-key="B">B</button>
+
+                <!-- Row 3 -->
+                <button class="key-btn" data-key="7">7</button>
+                <button class="key-btn" data-key="8">8</button>
+                <button class="key-btn" data-key="9">9</button>
+                <button class="key-btn cancel-key" data-key="C">C</button>
+
+                <!-- Row 4 -->
+                <button class="key-btn sym-key" data-key="*">*</button>
+                <button class="key-btn" data-key="0">0</button>
+                <button class="key-btn sym-key action-key" data-key="#">#</button>
+                <button class="key-btn cancel-key" data-key="D">D</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
