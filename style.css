@@ -481,9 +481,7 @@ h2 {
 }
 
 .luggage-icon {
-    height: 800px;
-    width: auto;
-    object-fit: contain;
+    height: 60px;
 }
 
 .counter-pill {
