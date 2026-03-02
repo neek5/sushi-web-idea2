@@ -62,6 +62,10 @@
                 <div class="pin-display-box" id="pin-display">
                     _ _ _ _ _ _ _
                 </div>
+                <div class="hint-row" style="margin-bottom: 20px;">
+                    <p class="pulse-anim highlight-action" style="font-size: 1.2rem; color: #2c3e50;">Press <span
+                            class="key-badge">#</span> to Submit</p>
+                </div>
                 <div class="hint-row">
                     <span><strong>C</strong> - Clear</span>
                     <span><strong>D</strong> - Cancel</span>
@@ -97,6 +101,58 @@
                     </div>
                     <div id="dynamic-luggage-container"></div>
                 </div>
+            </div>
+
+            <!-- SCREEN: Luggage Amount (Phase 1 & Phase 2) -->
+            <div id="screen-luggage-amount" class="screen">
+                <h2 id="amount-screen-title" style="font-size: 1.8rem; margin-bottom: 15px;">INPUT LUGGAGE AMOUNT</h2>
+                <div class="luggage-amount-layout">
+                    <div class="luggage-counters">
+                        <div class="counter-row">
+                            <img src="images/luggage-small.png" class="luggage-icon" alt="Small"
+                                onerror="this.style.display='none'">
+                            <div class="counter-pill">
+                                <span class="size-label small-lbl">SMALL</span>
+                                <button class="btn-count" onclick="updateCount('small', -1)">-</button>
+                                <span class="count-val" id="count-small">0</span>
+                                <button class="btn-count" onclick="updateCount('small', 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="counter-row">
+                            <img src="images/luggage-medium.png" class="luggage-icon" alt="Medium"
+                                onerror="this.style.display='none'">
+                            <div class="counter-pill">
+                                <span class="size-label medium-lbl">MEDIUM</span>
+                                <button class="btn-count" onclick="updateCount('medium', -1)">-</button>
+                                <span class="count-val" id="count-medium">0</span>
+                                <button class="btn-count" onclick="updateCount('medium', 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="counter-row">
+                            <img src="images/luggage-large.png" class="luggage-icon" alt="Large"
+                                onerror="this.style.display='none'">
+                            <div class="counter-pill">
+                                <span class="size-label large-lbl">LARGE</span>
+                                <button class="btn-count" onclick="updateCount('large', -1)">-</button>
+                                <span class="count-val" id="count-large">0</span>
+                                <button class="btn-count" onclick="updateCount('large', 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="code-panel" id="amount-code-panel" style="display: none;">
+                        <div class="code-note">
+                            THE CODE TO RETRIEVE<br>THE LUGGAGE LATER
+                        </div>
+                        <div class="code-display-box">
+                            <div class="your-code-lbl">YOUR CODE:</div>
+                            <div class="generated-code" id="user-retrieval-code">5XYA23</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="pulse-anim highlight-action" style="margin-top:20px; font-size: 1.2rem;">Press <span
+                        class="key-badge">#</span> to Finish</p>
+                <div class="cancel-hint mt-2"><strong>D</strong> - Cancel</div>
             </div>
 
             <!-- SCREEN: Message -->

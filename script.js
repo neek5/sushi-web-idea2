@@ -9,6 +9,7 @@ let currentScreen = 'screen-main-menu';
 let flowType = null; // 'A' (Deposit) or 'B' (Retrieve)
 let selectedLane = null;
 let currentPin = '';
+let luggageCounts = { small: 0, medium: 0, large: 0 };
 
 // Initialize UI
 document.addEventListener('DOMContentLoaded', () => {
@@ -66,15 +67,18 @@ function handleKeypress(key) {
             if (key === 'C') {
                 currentPin = '';
                 updatePinDisplay();
+            } else if (key === '#') {
+                if (currentPin.length === 7) {
+                    submitPin();
+                } else {
+                    const display = document.getElementById('pin-display');
+                    display.style.color = '#c0392b';
+                    setTimeout(() => display.style.color = '', 300);
+                }
             } else if (/\d/.test(key)) { // If it's a number 0-9
                 if (currentPin.length < 7) {
                     currentPin += key;
                     updatePinDisplay();
-
-                    // Auto-submit on 7th digit
-                    if (currentPin.length === 7) {
-                        setTimeout(submitPin, 300); // slight delay to let user see 7th digit
-                    }
                 }
             }
             break;
@@ -82,6 +86,19 @@ function handleKeypress(key) {
         case 'screen-drop-off':
             if (key === '#') {
                 startProcessing();
+            }
+            break;
+
+        case 'screen-luggage-amount':
+            if (key === '#') {
+                if (flowType === 'A' && document.getElementById('amount-code-panel').style.display === 'none') {
+                    // We just finished typing amount, ask for PIN next
+                    updatePinDisplay();
+                    showScreen('screen-enter-pin');
+                } else {
+                    // We just viewed the final receipt
+                    showTemporaryMessage("Success!", "Luggage stored securely.", 'screen-main-menu');
+                }
             }
             break;
 
@@ -127,8 +144,19 @@ function selectLane(laneNum) {
         if (status === 'O') {
             selectedLane = laneNum;
             currentPin = '';
-            updatePinDisplay();
-            showScreen('screen-enter-pin');
+
+            // Reset counters
+            luggageCounts = { small: 0, medium: 0, large: 0 };
+            document.getElementById('count-small').textContent = luggageCounts.small;
+            document.getElementById('count-medium').textContent = luggageCounts.medium;
+            document.getElementById('count-large').textContent = luggageCounts.large;
+
+            // Set UI for Input phase
+            document.getElementById('amount-screen-title').textContent = "INPUT LUGGAGE AMOUNT";
+            document.getElementById('amount-code-panel').style.display = 'none';
+            document.querySelectorAll('.btn-count').forEach(b => b.style.visibility = 'visible');
+
+            showScreen('screen-luggage-amount');
         } else {
             showTemporaryMessage("Lane Taken", "Please select an empty lane.", 'screen-select-lane');
         }
@@ -205,8 +233,16 @@ function completeProcessing() {
     // Update underlying state
     if (flowType === 'A') {
         systemState[selectedLane].status = 'X';
+
         systemState[selectedLane].pin = currentPin;
-        showTemporaryMessage("Success!", "Luggage stored securely.", 'screen-main-menu');
+
+        // Set UI for Receipt phase (Keep selected counts, reveal code)
+        document.getElementById('amount-screen-title').textContent = "STORED - YOUR RECEIPT CODE";
+        document.getElementById('amount-code-panel').style.display = 'flex';
+        document.querySelectorAll('.btn-count').forEach(b => b.style.visibility = 'hidden');
+        document.getElementById('user-retrieval-code').textContent = currentPin;
+
+        showScreen('screen-luggage-amount');
     } else {
         systemState[selectedLane].status = 'O';
         systemState[selectedLane].pin = '';
@@ -222,6 +258,14 @@ function completeProcessing() {
 // -----------------------------------------
 // Utility Functions
 // -----------------------------------------
+
+function updateCount(size, change) {
+    let newCount = luggageCounts[size] + change;
+    if (newCount < 0) newCount = 0;
+    if (newCount > 9) newCount = 9;
+    luggageCounts[size] = newCount;
+    document.getElementById(`count-${size}`).textContent = newCount;
+}
 
 function updateLaneDisplay() {
     const l1 = document.getElementById('lane-1-indicator');

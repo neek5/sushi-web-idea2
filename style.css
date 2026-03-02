@@ -455,3 +455,167 @@ h2 {
 .action-key {
     color: var(--bg-dark);
 }
+
+/* =========================================
+   LUGGAGE AMOUNT SCREEN
+   ========================================= */
+.luggage-amount-layout {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+    align-items: center;
+}
+
+.luggage-counters {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1.2;
+}
+
+.counter-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.luggage-icon {
+    height: 800px;
+    width: auto;
+    object-fit: contain;
+}
+
+.counter-pill {
+    background: #fdf5e6;
+    border: 3px solid #e1d5c9;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+    position: relative;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.05);
+    width: 180px;
+    justify-content: space-between;
+}
+
+.size-label {
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 8px;
+    letter-spacing: 1px;
+}
+
+.small-lbl {
+    background: #3b82f6;
+}
+
+.medium-lbl {
+    background: #3b82f6;
+}
+
+.large-lbl {
+    background: #3b82f6;
+}
+
+.btn-count {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #c0392b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+}
+
+.btn-count:active {
+    transform: translateY(3px);
+    box-shadow: 0 0px 0 #c0392b;
+}
+
+.btn-count:last-of-type {
+    background: #f1c40f;
+    box-shadow: 0 3px 0 #f39c12;
+}
+
+.btn-count:last-of-type:active {
+    box-shadow: 0 0px 0 #f39c12;
+}
+
+.count-val {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #2c3e50;
+    width: 30px;
+    text-align: center;
+}
+
+.code-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.code-note {
+    background: #3b82f6;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.2;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.code-note::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 40px;
+    border-width: 10px 10px 0 0;
+    border-style: solid;
+    border-color: #3b82f6 transparent transparent transparent;
+}
+
+.code-display-box {
+    background: #fdf5e6;
+    border: 3px solid #e1d5c9;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    width: 100%;
+}
+
+.your-code-lbl {
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    text-transform: uppercase;
+}
+
+.generated-code {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 2.2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #2c3e50;
+}
