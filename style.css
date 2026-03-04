@@ -469,8 +469,7 @@ h2 {
     display: flex;
     justify-content: center;
     width: 100%;
-    gap: 40px;
-    /* Increase gap slightly for receipt balance */
+    gap: 20px;
     align-items: center;
 }
 
@@ -486,8 +485,8 @@ h2 {
 .counter-row {
     display: flex;
     align-items: center;
-    gap: 25px;
-    /* Increase gap slightly for visual space */
+    gap: 15px;
+    /* Maintain smaller gap for visual space */
     justify-content: center;
     /* Center the luggage icon and pill together */
 }
@@ -502,11 +501,11 @@ h2 {
     border-radius: 30px;
     display: flex;
     align-items: center;
-    padding: 5px 25px;
+    padding: 5px 15px;
     /* Increase horizontal padding to push items out */
     position: relative;
     box-shadow: 0 4px 0 rgba(0, 0, 0, 0.05);
-    width: 380px;
+    width: 200px;
     /* Force the pill to be significantly wider */
     justify-content: space-between;
 }
