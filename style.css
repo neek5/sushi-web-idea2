@@ -72,6 +72,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    /* Ensures inner text lines are centered */
     opacity: 0;
     pointer-events: none;
     transform: translateY(20px) scale(0.95);
@@ -95,6 +97,7 @@ h2 {
     border-bottom: 3px dashed var(--text-dark);
     padding-bottom: 10px;
     width: 100%;
+    text-align: center;
 }
 
 .menu-options {
@@ -262,13 +265,16 @@ h2 {
     font-weight: bold;
     display: flex;
     align-items: center;
+    justify-content: center;
+    /* Center the text and button horizontally */
     gap: 10px;
 }
 
 /* Processing / Animations */
 .conveyor-container {
     width: 100%;
-    height: 120px;
+    height: 160px;
+    /* Increase height to allow larger luggage graphic to render fully */
     background-color: #34495e;
     border: 6px solid #2c3e50;
     border-radius: 8px;
@@ -461,7 +467,7 @@ h2 {
    ========================================= */
 .luggage-amount-layout {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
     gap: 20px;
     align-items: center;
@@ -470,14 +476,20 @@ h2 {
 .luggage-counters {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    /* Centers the rows horizontally */
     gap: 15px;
-    flex: 1.2;
+    width: 100%;
+    /* Ensure it spans full width of parent layout */
 }
 
 .counter-row {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 25px;
+    /* Increase gap slightly for visual space */
+    justify-content: center;
+    /* Center the luggage icon and pill together */
 }
 
 .luggage-icon {
@@ -490,10 +502,12 @@ h2 {
     border-radius: 30px;
     display: flex;
     align-items: center;
-    padding: 5px 15px;
+    padding: 5px 25px;
+    /* Increase horizontal padding to push items out */
     position: relative;
     box-shadow: 0 4px 0 rgba(0, 0, 0, 0.05);
-    width: 180px;
+    width: 380px;
+    /* Force the pill to be significantly wider */
     justify-content: space-between;
 }
 
@@ -616,4 +630,8 @@ h2 {
     font-weight: bold;
     letter-spacing: 2px;
     color: #2c3e50;
+}
+
+#amount-cancel-hint {
+    display: none !important;
 }

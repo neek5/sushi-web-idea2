@@ -92,11 +92,19 @@ function handleKeypress(key) {
         case 'screen-luggage-amount':
             if (key === '#') {
                 if (flowType === 'A' && document.getElementById('amount-code-panel').style.display === 'none') {
-                    // We just finished typing amount, ask for PIN next
+                    // Phase 1: We just finished typing amount
+                    const totalLuggage = luggageCounts.small + luggageCounts.medium + luggageCounts.large;
+
+                    if (totalLuggage === 0) {
+                        showTemporaryMessage("Add Luggage", "Please select at least 1 item.", 'screen-luggage-amount');
+                        return;
+                    }
+
+                    // Ask for PIN next
                     updatePinDisplay();
                     showScreen('screen-enter-pin');
                 } else {
-                    // We just viewed the final receipt
+                    // Phase 2: We just viewed the final receipt
                     showTemporaryMessage("Success!", "Luggage stored securely.", 'screen-main-menu');
                 }
             }
@@ -155,6 +163,7 @@ function selectLane(laneNum) {
             document.getElementById('amount-screen-title').textContent = "INPUT LUGGAGE AMOUNT";
             document.getElementById('amount-code-panel').style.display = 'none';
             document.querySelectorAll('.btn-count').forEach(b => b.style.visibility = 'visible');
+            document.getElementById('amount-cancel-hint').style.display = 'block';
 
             showScreen('screen-luggage-amount');
         } else {
@@ -211,7 +220,7 @@ function startProcessing() {
     // Inject animated luggage visual
     container.innerHTML = `
         <div class="luggage-item-wrap ${flowType === 'A' ? 'luggage-anim-in' : 'luggage-anim-out'}">
-            <img src="images/sushi-combo.png" style="height: 80px;" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgODAiPjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iNDAiIHk9IjQwIiByeD0iNSIgZmlsbD0iIzMzMyIvPjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI1MCIgeD0iMTAiIHk9IjUiIHJ4PSI4IiBmaWxsPSIjZTg1YTM2Ii8+PC9zdmc+'">
+            <img src="images/sushi-combo%20new.PNG" style="height: 120px;" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgODAiPjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iNDAiIHk9IjQwIiByeD0iNSIgZmlsbD0iIzMzMyIvPjxyZWN0IHdpZHRoPSI4MCIgaGVpZ2h0PSI1MCIgeD0iMTAiIHk9IjUiIHJ4PSI4IiBmaWxsPSIjZTg1YTM2Ii8+PC9zdmc+'">
         </div>
     `;
 
@@ -241,6 +250,7 @@ function completeProcessing() {
         document.getElementById('amount-code-panel').style.display = 'flex';
         document.querySelectorAll('.btn-count').forEach(b => b.style.visibility = 'hidden');
         document.getElementById('user-retrieval-code').textContent = currentPin;
+        document.getElementById('amount-cancel-hint').style.display = 'none';
 
         showScreen('screen-luggage-amount');
     } else {
